@@ -1,535 +1,262 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="robots" content="noindex, nofollow">
-   
- <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Cloudways Laravel</title>
+@extends('layouts.app')
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+@section('title', 'PhysioNote - 홈')
 
-    <style type="text/css">
-        @font-face {
-            font-family: 'proxima_nova';
-            src: url('https://litmus.com/fonts/Emails/proximanova-regular-webfont.eot');
-            src: url('https://litmus.com/fonts/Emails/proximanova-regular-webfont.eot?#iefix') format('embedded-opentype'),
-                url('https://litmus.com/fonts/Emails/proximanova-regular-webfont.woff') format('woff'),
-                url('https://litmus.com/fonts/Emails/proximanova-regular-webfont.ttf') format('truetype'),
-                url('https://litmus.com/fonts/Emails/proximanova-regular-webfont.svg#proxima_nova_rgregular') format('svg');
-            font-weight: 400;
-            font-style: normal;
-        }
-        
-        @font-face {
-            font-family: 'proxima_nova';
-            src: url('https://litmus.com/fonts/Emails/proximanova-bold-webfont.eot');
-            src: url('https://litmus.com/fonts/Emails/proximanova-bold-webfont.eot?#iefix') format('embedded-opentype'),
-                url('https://litmus.com/fonts/Emails/proximanova-bold-webfont.woff') format('woff'),
-                url('https://litmus.com/fonts/Emails/proximanova-bold-webfont.ttf') format('truetype'),
-                url('https://litmus.com/fonts/Emails/proximanova-bold-webfont.svg#proxima_nova_rgbold') format('svg');
-            font-weight: 600;
-            font-style: normal;
-        }
-
-        * {
-            -webkit-box-sizing: border-box;
-            -moz-box-sizing: border-box;
-            box-sizing: border-box;
-            overflow-x: hidden;
-        }
-
-        body {
-            padding: 0;
-            margin: 0;
-            color: #1a1a1a;
-            font-size: 15px;
-            font-family: 'proxima_nova';
-            font-weight: 400;
-        }
-
-        a {
-            display: inline-block;
-            text-decoration: none !important;
-            transition: all 0.3s ease-in-out;
-        }
-
-        .container {
-            max-width: 1120px;
-            margin: 0 auto;
-            padding-left: 15px;
-            padding-right: 15px;
-        }
-
-        .img-responsive
-        {
-            display: inline-block;
-            max-width: 100%;
-            height: auto;
-        }
-
-        .cw_glb_btn {
-            color: #0E134F;
-            font-size: 16px;
-            font-weight: 600;
-            display: inline-block;
-            background-color: #39DCB1;
-            border-radius: 6px !important;
-            padding: 15px 20px;
-            min-width: 220px;
-            text-align: center;
-            text-transform: uppercase;
-        }
-
-        .cw_glb_btn:hover, .cw_glb_btn:focus, .cw_glb_btn:active {
-            background-color: #74ffda !important;
-        }
-
-        .lrvl_wlcm_bnr_sec
-        {
-            background: #1c2bf7;
-            background: -moz-linear-gradient(45deg, #1c2bf7 0, #061c59 100%);
-            background: -webkit-gradient(left bottom, right top, color-stop(0%, #1c2bf7), color-stop(100%, #061c59));
-            background: -webkit-linear-gradient(45deg, #1c2bf7 0, #061c59 100%);
-            background: -o-linear-gradient(45deg, #1c2bf7 0, #061c59 100%);
-            background: -ms-linear-gradient(45deg, #1c2bf7 0, #061c59 100%);
-            background: linear-gradient(45deg, #1c2bf7 0, #061c59 100%);
-            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#1c2bf7', endColorstr='#061c59', GradientType=1);
-            padding: 60px 0 80px;
-        }
-
-        .lrvl_wlcm_bnr_mainBox h1
-        {
-            color: #fff;
-            font-size: 48px;
-            font-weight: 600;
-            margin: 30px 0;
-        }
-
-        .lrvl_wlcm_mid_sec
-        {
-            background: #fff;
-            padding-bottom: 80px;
-        }
-
-        .lrvl_wlcm_mid_mainBox
-        {
-            display: flex;
-        }
-
-        .lrvl_wlcm_mid_lftBox
-        {
-            flex: 1;
-        }
-
-        .lrvl_wlcm_version
-        {
-            color: #0A1E43;
-            opacity: 0.7;
-            font-size: 14px;
-            padding: 20px 0 30px;
-        }
-
-        .lrvl_wlcm_mid_lftBox
-        {
-            position: relative;
-        }
-
-        .lrvl_wlcm_mid_lftBox ul
-        {
-            margin: 0;
-            padding: 0;
-        }
-
-        .lrvl_wlcm_mid_lftBox ul li
-        {
-            margin: 0;
-            padding: 0;
-            list-style: none;
-        }
-
-        .lrvl_wlcm_mid_lftBox ul li a
-        {
-            color: #0A1E43;
-            font-size: 18px;
-            padding: 15px;
-            display: block;
-            border-left: 2px solid rgba(196, 196, 196, 0.5);
-        }
-
-        .lrvl_wlcm_mid_lftBox ul li a.active
-        {
-            color: #2F39BF;
-            font-weight: 600;
-            border-color: #2F39BF;
-        }
-
-        .lrvl_wlcm_mid_lftBox_fxd
-        {
-            position: fixed;
-            top: 100px;
-            z-index: 999;
-        }
-
-        .lrvl_wlcm_mid_rhtBox
-        {
-            flex: 2;
-        }
-
-        .lrvl_wlcm_mid_rht_txtBox
-        {
-            margin-bottom: 20px;
-        }
-        
-        .lrvl_wlcm_mid_rht_txtBox h2
-        {
-            color: #0E134F;
-            font-size: 36px;
-            font-weight: 600;
-            margin: 0 0 30px;
-        }
-
-        .lrvl_wlcm_mid_rht_txtBox ul
-        {
-            margin: 0;
-            padding: 0;
-        }
-
-        .lrvl_wlcm_mid_rht_txtBox ul li
-        {
-            margin: 0;
-            padding: 0;
-            list-style: none;
-        }
-
-        .lrvl_wlcm_mid_rht_txtBox ul li a
-        {
-            color: #0A1E43;
-            font-size: 18px;
-            font-weight: 600;
-            padding: 20px;
-            margin-bottom: 20px;
-            background: rgba(248, 249, 251, 0.5);
-            display: block;
-        }
-
-        .lrvl_wlcm_mid_rht_txtBox ul li a:hover,
-        .lrvl_wlcm_mid_rht_txtBox ul li a:focus,
-        .lrvl_wlcm_mid_rht_txtBox ul li a:active
-        {
-            color: #2F39BF;
-        }
-
-        .lrvl_wlcm_signUp_sec
-        {
-            background: #1c2bf7;
-            background: -moz-linear-gradient(45deg, #1c2bf7 0, #061c59 100%);
-            background: -webkit-gradient(left bottom, right top, color-stop(0%, #1c2bf7), color-stop(100%, #061c59));
-            background: -webkit-linear-gradient(45deg, #1c2bf7 0, #061c59 100%);
-            background: -o-linear-gradient(45deg, #1c2bf7 0, #061c59 100%);
-            background: -ms-linear-gradient(45deg, #1c2bf7 0, #061c59 100%);
-            background: linear-gradient(45deg, #1c2bf7 0, #061c59 100%);
-            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#1c2bf7', endColorstr='#061c59', GradientType=1);
-            padding: 80px 0;
-            text-align: center;
-        }
-
-        .lrvl_wlcm_signUp_mainBox h3
-        {
-            color: #fff;
-            font-size: 36px;
-            font-weight: 600;
-            margin: 0 0 30px;
-        }
-
-        .lrvl_wlcm_ftr_sec
-        {
-            background: #050826;
-            padding: 20px 0;
-        }
-
-        .lrvl_wlcm_ftr_sec p
-        {
-            color: #fff;
-            font-size: 15px;
-            margin: 0;
-            text-align: center;
-        }
-
-        @media (max-width: 1200px)
-        {
-            .container {
-                width: 970px;
-            }
-        }
-
-        @media (max-width: 992px)
-        {
-            .container {
-                width: 750px;
-            }
-
-            .lrvl_wlcm_bnr_sec
-            {
-                padding: 50px;
-            }
-
-            .lrvl_wlcm_bnr_mainBox h1 {
-                font-size: 32px;
-                margin: 20px 0;
-            }
-
-            .lrvl_wlcm_mid_lftBox ul li a,
-            .lrvl_wlcm_mid_rht_txtBox ul li a
-            {
-                font-size: 16px;
-            }
-
-            .lrvl_wlcm_mid_rht_txtBox h2
-            {
-                font-size: 26px;
-                margin-bottom: 10px;
-            }
-
-            .lrvl_wlcm_signUp_sec
-            {
-                padding: 50px 0 40px;
-            }
-
-            .lrvl_wlcm_signUp_mainBox h3 {
-                font-size: 26px;
-                line-height: 36px;
-                margin-bottom: 20px;
-            }
-
-            .lrvl_wlcm_signUp_mainBox h3 br
-            {
-                display: none;
-            }
-        }
-
-        @media (max-width: 767px)
-        {
-            .container {
-                width: 100%;
-            }
-
-            .lrvl_wlcm_bnr_sec {
-                padding: 50px 0 40px;
-                text-align: center;
-            }
-
-            .lrvl_wlcm_version
-            {
-                padding-bottom: 0;
-            }
-
-            .lrvl_wlcm_mid_sec {
-                padding-bottom: 30px;
-            }
-
-            .lrvl_wlcm_mid_mainBox {
-                display: block;
-            }
-
-            .lrvl_wlcm_mid_lftBox
-            {
-                margin-bottom: 20px;
-            }
-
-            .lrvl_wlcm_mid_lftBox ul
-            {
-                padding: 20px 0 10px;
-            }
-
-            .lrvl_wlcm_mid_lftBox_fxd {
-                top: 0px;
-                background: #fff;
-                border-bottom: 2px solid #2F39BF;
-            }
-            
-            .lrvl_wlcm_mid_lftBox ul li
-            {
-                display: inline-block;
-            }
-
-            .lrvl_wlcm_mid_lftBox ul li a {
-                font-size: 14px;
-                padding: 10px;
-                background-color: rgba(196, 196, 196, 0.5);
-                border: 0 !important;
-                border-radius: 6px;
-            }
-
-            .lrvl_wlcm_mid_lftBox ul li a.active
-            {
-                color: #fff;
-                background-color: #2F39BF;
-            }
-
-            .lrvl_wlcm_mid_rht_txtBox ul li a {
-                font-size: 15px;
-                padding: 15px;
-                margin-bottom: 10px;
-            }
-        }
-
-        @media (max-width: 500px)
-        {
-            .cw_glb_btn
-            {
-                width: 100%;
-            }
-
-            .lrvl_wlcm_mid_lftBox ul li,
-            .lrvl_wlcm_mid_lftBox ul li a
-            {
-                width: 100%;
-                text-align: center;
-            }
-        }
-    </style>
-  </head>
-  <body>
-    <section class="lrvl_wlcm_bnr_sec">
-        <div class="container">
-            <div class="lrvl_wlcm_bnr_mainBox">
-                <div class="lrvl_wlcm_bnr_imgBox">
-                    <img src="https://www.cloudways.com/wp-content/uploads/2021/02/cw-laravel-logo.png" alt="Cloudways Laravel" class="img-responsive">
-                </div>
-                <h1>Getting Started with Laravel</h1>
-            </div>
+@section('content')
+    <!-- Banner Section -->
+    <div class="bg-primary px-5 py-8 text-white flex items-center justify-between mb-6">
+        <div class="flex-1">
+            <h2 class="text-2xl font-bold mb-2">물리치료사・운동지도자를 위한<br>통합 플랫폼</h2>
+            <p class="text-sm opacity-90 mb-4">문제 풀이, 임상 정보, 커뮤니티를 한 곳에서</p>
+            <a href="/problems" class="inline-block px-5 py-2.5 bg-white text-primary rounded-lg font-semibold text-sm transition-transform hover:-translate-y-0.5">문제 풀어보기</a>
         </div>
-    </section>
+        <div class="w-30 h-20 opacity-80">
+            <svg viewBox="0 0 300 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="50" y="40" width="200" height="120" rx="10" fill="#E3F2FD"/>
+                <circle cx="150" cy="80" r="20" fill="#4A90E2"/>
+                <rect x="80" y="110" width="140" height="8" rx="4" fill="#BBDEFB"/>
+                <rect x="80" y="125" width="100" height="8" rx="4" fill="#BBDEFB"/>
+            </svg>
+        </div>
+    </div>
 
-    <section class="lrvl_wlcm_mid_sec">
-        <div class="container">
-            <div class="lrvl_wlcm_version">
-            <div class="lrvl_wlcm_mid_mainBox">
-                <div class="lrvl_wlcm_mid_lftBox">
-                    <ul>
-                        <li><a href="javascript:void(0);" data-target="section1" class="active">Getting Started Guides</a></li>
-                        <li><a href="javascript:void(0);" data-target="section2">Deployment Guides</a></li>
-                        <li><a href="javascript:void(0);" data-target="section3">Using Cloudways Features</a></li>
-                        <li><a href="javascript:void(0);" data-target="section4">Optimization Guides</a></li>
-                    </ul>
+    <!-- Quick Actions -->
+    <div class="px-5 mb-6">
+        <div class="grid grid-cols-4 gap-4">
+            <a href="/problems" class="flex flex-col items-center">
+                <div class="action-icon bg-primary">
+                    <svg viewBox="0 0 24 24" fill="white" width="28" height="28">
+                        <path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-1 9H9V9h10v2zm-4 4H9v-2h6v2zm4-8H9V5h10v2z"/>
+                    </svg>
                 </div>
+                <span class="text-xs text-gray-600 font-medium">문제 풀이</span>
+            </a>
 
-                <div class="lrvl_wlcm_mid_rhtBox">
-                    <div class="lrvl_wlcm_mid_rht_txtBox" id="section1">
-                        <h2>Getting Started Guides</h2>
-                        <ul>
-                            <li><a href="https://support.cloudways.com/how-do-i-take-my-website-live-from-cloudways/?utm_source=php-stack-page&utm_medium=php-stack-page&utm_campaign=php-stack-page" target="_blank">How Do I Take My Website Live from Cloudways</a></li>
-                            <li><a href="https://support.cloudways.com/deploy-laravel-on-cloudways/?utm_source=php-stack-page&utm_medium=php-stack-page&utm_campaign=php-stack-page" target="_blank">How to Deploy Laravel Project on Cloudways Server</a></li>
-                            <li><a href="https://support.cloudways.com/how-to-manage-your-databases-using-the-integrated-database-manager/?utm_source=php-stack-page&utm_medium=php-stack-page&utm_campaign=php-stack-page" target="_blank">Manage Your Databases Using the Cloudways Database Manager</a></li>
-                            <li><a href="https://support.cloudways.com/configure-gmail-smtp/?utm_source=php-stack-page&utm_medium=php-stack-page&utm_campaign=php-stack-page" target="_blank">How to Configure Gmail SMTP</a></li>
-                            <li><a href="https://www.cloudways.com/blog/setup-https-ssl-on-laravel/?utm_source=php-stack-page&utm_medium=php-stack-page&utm_campaign=php-stack-page" target="_blank">How to Setup HTTPS SSL certificates on Laravel</a></li>
-                            <li><a href="https://www.cloudways.com/blog/integrate-cdn-in-laravel/?utm_source=php-stack-page&utm_medium=php-stack-page&utm_campaign=php-stack-page" target="_blank">Integrate CloudwaysCDN with Laravel Applications</a></li>
-                            <li><a href="https://support.cloudways.com/what-can-i-do-from-the-packages-tab-of-server-settings-packages-section/?utm_source=php-stack-page&utm_medium=php-stack-page&utm_campaign=php-stack-page" target="_blank">What can I do from Packages tab of Cloudways Platform</a></li>
-                        </ul>
-                    </div>
+            <a href="/clinical" class="flex flex-col items-center">
+                <div class="action-icon bg-secondary">
+                    <svg viewBox="0 0 24 24" fill="white" width="28" height="28">
+                        <path d="M9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm2-7h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/>
+                    </svg>
+                </div>
+                <span class="text-xs text-gray-600 font-medium">임상 정보</span>
+            </a>
 
-                    <div class="lrvl_wlcm_mid_rht_txtBox" id="section2">
-                        <h2>Deployment Guides</h2>
-                        <ul>
-                            <li><a href="https://www.cloudways.com/blog/deploy-through-gitlab/?utm_source=php-stack-page&utm_medium=php-stack-page&utm_campaign=php-stack-page" target="_blank">Deploy Apps Using GitLab on Cloudways Platform</a></li>
-                            <li><a href="https://www.cloudways.com/blog/deploy-php-application/?utm_source=php-stack-page&utm_medium=php-stack-page&utm_campaign=php-stack-page" target="_blank">Deploy PHP Application With Best Web Tools in Minutes</a></li>
-                            <li><a href="https://www.cloudways.com/blog/php-laravel-envoyer-deployment/?utm_source=php-stack-page&utm_medium=php-stack-page&utm_campaign=php-stack-page" target="_blank">Deploy PHP Application via Laravel Envoyer</a></li>
-                            <li><a href="https://www.cloudways.com/blog/deploy-gitlab-ci-cd/?utm_source=php-stack-page&utm_medium=php-stack-page&utm_campaign=php-stack-page" target="_blank">Using GitLab CI/CD on Cloudways</a></li>
-                            <li><a href="https://support.cloudways.com/how-to-automate-git-deployment-using-webhooks/?utm_source=php-stack-page&utm_medium=php-stack-page&utm_campaign=php-stack-page" target="_blank">Automatically Deploy From Git to Server Using Webhooks</a></li>
-                        </ul>
-                    </div>
+            <a href="#" onclick="alert('커뮤니티 기능은 준비중입니다.'); return false;" class="flex flex-col items-center">
+                <div class="action-icon bg-info">
+                    <svg viewBox="0 0 24 24" fill="white" width="28" height="28">
+                        <path d="M21 6h-2v9H6v2c0 .55.45 1 1 1h11l4 4V7c0-.55-.45-1-1-1zm-4 6V3c0-.55-.45-1-1-1H3c-.55 0-1 .45-1 1v14l4-4h10c.55 0 1-.45 1-1z"/>
+                    </svg>
+                </div>
+                <span class="text-xs text-gray-600 font-medium">커뮤니티</span>
+            </a>
 
-                    <div class="lrvl_wlcm_mid_rht_txtBox" id="section3">
-                        <h2>Using Cloudways Features</h2>
-                        <ul>
-                            <li><a href="https://www.cloudways.com/blog/install-laravel-horizon/?utm_source=php-stack-page&utm_medium=php-stack-page&utm_campaign=php-stack-page" target="_blank">How to Install Laravel Horizon on Cloudways</a></li>
-                            <li><a href="https://www.cloudways.com/blog/laravel-cron-job-scheduling/?utm_source=php-stack-page&utm_medium=php-stack-page&utm_campaign=php-stack-page" target="_blank">Laravel Cron Jobs Scheduling on Cloudways</a></li>
-                            <li><a href="https://support.cloudways.com/configure-supervisord-on-cloudways/?utm_source=php-stack-page&utm_medium=php-stack-page&utm_campaign=php-stack-page" target="_blank">How to Configure Laravel Supervisord on Cloudways</a></li>
-                            <li><a href="https://support.cloudways.com/how-to-change-php-fpm-settings/?utm_source=php-stack-page&utm_medium=php-stack-page&utm_campaign=php-stack-page" target="_blank">How to Change PHP-FPM Settings</a></li>
-                            <li><a href="https://support.cloudways.com/how-to-install-phpmyadmin-on-cloudways/?utm_source=php-stack-page&utm_medium=php-stack-page&utm_campaign=php-stack-page" target="_blank">How to Install PHPMyAdmin on Cloudways</a></li>
-                            <li><a href="https://support.cloudways.com/can-i-use-cloudflare-cdn/?utm_source=php-stack-page&utm_medium=php-stack-page&utm_campaign=php-stack-page" target="_blank">How to Use Cloudflare CDN on Cloudways</a></li>
-                            <li><a href="https://support.cloudways.com/setting-up-remote-mysql-database-connections/?utm_source=php-stack-page&utm_medium=php-stack-page&utm_campaign=php-stack-page" target="_blank">How to Setup MySQL Remote Connection to Database</a></li>
-                            <li><a href="https://support.cloudways.com/allow-remote-mysql-database-connections/?utm_source=php-stack-page&utm_medium=php-stack-page&utm_campaign=php-stack-page" target="_blank">How to Whitelist IP Addresses for Remote MySQL Connections</a></li>
-                            <li><a href="https://www.cloudways.com/blog/send-email-in-laravel/?utm_source=php-stack-page&utm_medium=php-stack-page&utm_campaign=php-stack-page" target="_blank">How to Send Email in Laravel Using Prebuilt Tools</a></li>
-                        </ul>
-                    </div>
+            <a href="/mypage" class="flex flex-col items-center">
+                <div class="action-icon bg-danger">
+                    <svg viewBox="0 0 24 24" fill="white" width="28" height="28">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+                    </svg>
+                </div>
+                <span class="text-xs text-gray-600 font-medium">마이페이지</span>
+            </a>
+        </div>
+    </div>
 
-                    <div class="lrvl_wlcm_mid_rht_txtBox" id="section4">
-                        <h2>Optimization Guides</h2>
-                        <ul>
-                            <li><a href="https://www.cloudways.com/blog/laravel-performance-optimization/?utm_source=php-stack-page&utm_medium=php-stack-page&utm_campaign=php-stack-page" target="_blank">Ultimate Laravel Performance Optimization Guide</a></li>
-                            <li><a href="https://www.cloudways.com/blog/integrate-laravel-cache/?utm_source=php-stack-page&utm_medium=php-stack-page&utm_campaign=php-stack-page" target="_blank">How to Use Laravel Cache For Fast Performance</a></li>
-                            <li><a href="https://www.cloudways.com/blog/best-laravel-security-practices/?utm_source=php-stack-page&utm_medium=php-stack-page&utm_campaign=php-stack-page" target="_blank">Best Practices to Improve Laravel App's Security</a></li>
-                            <li><a href="https://www.cloudways.com/blog/prevent-laravel-xss-exploits/?utm_source=php-stack-page&utm_medium=php-stack-page&utm_campaign=php-stack-page" target="_blank">Laravel Validation & Sanitization to Prevent XSS Exploits</a></li>
-                        </ul>
-                    </div>
+    <!-- Card News Section -->
+    <div class="mb-6">
+        <h2 class="text-lg font-bold text-gray-900 mb-4 px-5">카드뉴스</h2>
+
+        <!-- Content Carousel -->
+        @if($contents->isNotEmpty())
+            <div class="overflow-x-scroll overflow-y-hidden scrollbar-hide" style="cursor: grab; user-select: none; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none;">
+                <div class="flex gap-3 pl-5 pr-5" style="width: max-content; padding-bottom: 2px;">
+                    @foreach($contents as $content)
+                        <div class="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow cursor-pointer overflow-hidden flex-shrink-0 card-item"
+                             style="width: calc(100vw - 60px); max-width: 320px;"
+                             data-url="/content/{{ $content->id }}">
+                            @if($content->thumbnail)
+                                <img src="{{ Storage::url($content->thumbnail) }}"
+                                     alt="{{ $content->title }}"
+                                     class="w-full h-36 object-cover">
+                            @else
+                                <div class="w-full h-36 bg-gray-200 flex items-center justify-center">
+                                    <svg class="w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                              d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                    </svg>
+                                </div>
+                            @endif
+
+                            <div class="p-3">
+                                <div class="mb-2">
+                                    <h3 class="text-sm font-semibold text-gray-900 line-clamp-2">
+                                        {{ $content->title }}
+                                    </h3>
+                                    @if($content->badge)
+                                        @php
+                                            $badges = [
+                                                'popular' => ['text' => '인기', 'color' => 'bg-red-100 text-red-800'],
+                                                'essential' => ['text' => '필수', 'color' => 'bg-yellow-100 text-yellow-800'],
+                                                'basic' => ['text' => '기본', 'color' => 'bg-gray-100 text-gray-800'],
+                                                'new' => ['text' => '신규', 'color' => 'bg-green-100 text-green-800'],
+                                                'updated' => ['text' => '업데이트', 'color' => 'bg-blue-100 text-blue-800'],
+                                                'premium' => ['text' => '프리미엄', 'color' => 'bg-purple-100 text-purple-800'],
+                                            ];
+                                            $badge = $badges[$content->badge] ?? ['text' => '', 'color' => ''];
+                                        @endphp
+                                        @if($badge['text'])
+                                            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium {{ $badge['color'] }} mt-1">
+                                                {{ $badge['text'] }}
+                                            </span>
+                                        @endif
+                                    @endif
+                                </div>
+
+                                <div class="flex items-center justify-between text-xs">
+                                    @if($content->subCategory)
+                                        <div class="text-gray-500">
+                                            {{ $content->subCategory->name }}
+                                        </div>
+                                    @endif
+                                    <div class="text-gray-400">
+                                        {{ $content->created_at->format('Y.m.d') }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
                 </div>
             </div>
-        </div>
-    </section>
 
-    <section class="lrvl_wlcm_signUp_sec">
-        <div class="container">
-            <div class="lrvl_wlcm_signUp_mainBox"> 
-                <h3>Be a Part of Exciting Discussion <br/>on Cloudways User Group</h3>
-                <a href="https://www.facebook.com/groups/CloudwaysUsers" target="_blank" class="cw_glb_btn">JOIN NOW</a>
+            <!-- Pagination -->
+            @if($contents->hasPages())
+                <div class="flex justify-center mb-6">
+                    {{ $contents->links('pagination::tailwind') }}
+                </div>
+            @endif
+        @else
+            <div class="text-center py-12">
+                <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                </svg>
+                <h3 class="mt-2 text-sm font-medium text-gray-900">콘텐츠가 없습니다</h3>
+                <p class="mt-1 text-sm text-gray-500">아직 등록된 카드뉴스가 없습니다.</p>
             </div>
-        </div>
-    </section>
+        @endif
+    </div>
+    <script>
+    // Enable mouse drag scrolling for desktop - wait for DOM
+    window.addEventListener('DOMContentLoaded', function() {
+        const scrollContainer = document.querySelector('.overflow-x-scroll');
+        if (!scrollContainer) {
+            console.log('No scroll container found');
+            return;
+        }
 
-    <footer class="lrvl_wlcm_ftr_sec">
-        <p>© 2022 Cloudways Ltd. All rights reserved</p>
-    </footer>
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+        let moved = false;
 
-    <!-- jQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-
-    <script type="text/javascript">
-        $('.lrvl_wlcm_mid_lftBox ul li a').on('click',function () {
-            let get_data_id = $(this).data('target');
-            $('html, body').stop().animate({
-                scrollTop: $('#' + get_data_id).offset().top - 20
-            }, 500);
+        // Mouse wheel scrolling for desktop
+        scrollContainer.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            scrollContainer.scrollLeft += e.deltaY;
         });
 
-        $(window).on('scroll', () => {
-            let get_win_scroll = $(window).scrollTop();
-            let get_win_height = $(window).height() - 100;
-            let get_top_offset = $('.lrvl_wlcm_mid_sec').offset().top;
-            let get_bottom_offset = $('.lrvl_wlcm_signUp_sec').offset().top;
-            let get_sideNav_width = $('.lrvl_wlcm_mid_lftBox ul').outerWidth();
+        // Mouse drag events
+        scrollContainer.addEventListener('mousedown', (e) => {
+            isDown = true;
+            moved = false;
+            scrollContainer.classList.add('active');
+            scrollContainer.style.cursor = 'grabbing';
+            startX = e.pageX - scrollContainer.offsetLeft;
+            scrollLeft = scrollContainer.scrollLeft;
+        });
 
-            //Fixed Right Menu
-            if((get_win_scroll >= get_top_offset) && ((get_win_scroll + get_win_height) <= get_bottom_offset))
-            {
-                $('.lrvl_wlcm_mid_lftBox ul').css('width', get_sideNav_width);
-                $('.lrvl_wlcm_mid_lftBox ul').addClass('lrvl_wlcm_mid_lftBox_fxd');
-            } else {
-                $('.lrvl_wlcm_mid_lftBox ul').removeClass('lrvl_wlcm_mid_lftBox_fxd');
+        document.addEventListener('mouseleave', () => {
+            isDown = false;
+            scrollContainer.style.cursor = 'grab';
+            scrollContainer.classList.remove('active');
+        });
+
+        document.addEventListener('mouseup', () => {
+            isDown = false;
+            scrollContainer.style.cursor = 'grab';
+            scrollContainer.classList.remove('active');
+        });
+
+        scrollContainer.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - scrollContainer.offsetLeft;
+            const walk = (x - startX) * 2;
+            if (Math.abs(walk) > 5) {
+                moved = true;
             }
+            scrollContainer.scrollLeft = scrollLeft - walk;
+        });
 
-            //Check Current Fold
-            var get_content_offset = new Array();
-            $('.lrvl_wlcm_mid_rht_txtBox').each(function() {
-                get_content_offset.push($(this).offset().top - 100);
-            });
-
-            for( var i=0; i<= get_content_offset.length; i++){
-                if($(this).scrollTop() >= get_content_offset[i]){
-                    $('.lrvl_wlcm_mid_lftBox ul li a').removeClass('active');
-                    $('.lrvl_wlcm_mid_lftBox ul li a').eq(i).addClass('active');
+        // Handle card clicks with delay
+        const cards = scrollContainer.querySelectorAll('.card-item');
+        cards.forEach(card => {
+            card.addEventListener('click', (e) => {
+                if (!moved) {
+                    const url = card.dataset.url;
+                    if (url) {
+                        window.location.href = url;
+                    }
                 }
-            }
-        });    
+            });
+        });
+    });
     </script>
 
-  </body>
-</html>
+    <style>
+    @media (max-width: 400px) {
+        .grid-cols-4 {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+    }
+
+    .line-clamp-2 {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .scrollbar-hide {
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+    }
+
+    .scrollbar-hide::-webkit-scrollbar {
+        display: none;  /* Chrome, Safari and Opera */
+    }
+
+    /* Smooth scrolling */
+    .overflow-x-scroll {
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+        overflow-x: scroll !important;
+        overflow-y: hidden !important;
+    }
+
+    /* Prevent text selection while dragging */
+    .overflow-x-scroll.active {
+        scroll-behavior: auto;
+    }
+
+    /* Only apply snap scrolling on mobile */
+    @media (max-width: 768px) {
+        .overflow-x-scroll {
+            scroll-snap-type: x mandatory;
+        }
+
+        .card-item {
+            scroll-snap-align: start;
+        }
+    }
+</style>
+@endsection
