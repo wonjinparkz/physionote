@@ -4,11 +4,11 @@
 
 @section('content')
     <!-- Banner Section -->
-    <div class="bg-primary px-5 py-8 text-white flex items-center justify-between mb-6">
+    <div class="bg-[#4056FF] px-5 py-8 text-white flex items-center justify-between mb-6">
         <div class="flex-1">
             <h2 class="text-2xl font-bold mb-2">물리치료사・운동지도자를 위한<br>통합 플랫폼</h2>
             <p class="text-sm opacity-90 mb-4">문제 풀이, 임상 정보, 커뮤니티를 한 곳에서</p>
-            <a href="/problems" class="inline-block px-5 py-2.5 bg-white text-primary rounded-lg font-semibold text-sm transition-transform hover:-translate-y-0.5">문제 풀어보기</a>
+            <a href="/problems" class="inline-block px-5 py-2.5 bg-white text-[#4056FF] rounded-lg font-semibold text-sm transition-transform hover:-translate-y-0.5">문제 풀어보기</a>
         </div>
         <div class="w-30 h-20 opacity-80">
             <svg viewBox="0 0 300 200" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -17,47 +17,6 @@
                 <rect x="80" y="110" width="140" height="8" rx="4" fill="#BBDEFB"/>
                 <rect x="80" y="125" width="100" height="8" rx="4" fill="#BBDEFB"/>
             </svg>
-        </div>
-    </div>
-
-    <!-- Quick Actions -->
-    <div class="px-5 mb-6">
-        <div class="grid grid-cols-4 gap-4">
-            <a href="/problems" class="flex flex-col items-center">
-                <div class="action-icon bg-primary">
-                    <svg viewBox="0 0 24 24" fill="white" width="28" height="28">
-                        <path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-1 9H9V9h10v2zm-4 4H9v-2h6v2zm4-8H9V5h10v2z"/>
-                    </svg>
-                </div>
-                <span class="text-xs text-gray-600 font-medium">문제 풀이</span>
-            </a>
-
-            <a href="/clinical" class="flex flex-col items-center">
-                <div class="action-icon bg-secondary">
-                    <svg viewBox="0 0 24 24" fill="white" width="28" height="28">
-                        <path d="M9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm2-7h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/>
-                    </svg>
-                </div>
-                <span class="text-xs text-gray-600 font-medium">임상 정보</span>
-            </a>
-
-            <a href="#" onclick="alert('커뮤니티 기능은 준비중입니다.'); return false;" class="flex flex-col items-center">
-                <div class="action-icon bg-info">
-                    <svg viewBox="0 0 24 24" fill="white" width="28" height="28">
-                        <path d="M21 6h-2v9H6v2c0 .55.45 1 1 1h11l4 4V7c0-.55-.45-1-1-1zm-4 6V3c0-.55-.45-1-1-1H3c-.55 0-1 .45-1 1v14l4-4h10c.55 0 1-.45 1-1z"/>
-                    </svg>
-                </div>
-                <span class="text-xs text-gray-600 font-medium">커뮤니티</span>
-            </a>
-
-            <a href="/mypage" class="flex flex-col items-center">
-                <div class="action-icon bg-danger">
-                    <svg viewBox="0 0 24 24" fill="white" width="28" height="28">
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
-                    </svg>
-                </div>
-                <span class="text-xs text-gray-600 font-medium">마이페이지</span>
-            </a>
         </div>
     </div>
 
@@ -70,15 +29,15 @@
             <div class="overflow-x-scroll overflow-y-hidden scrollbar-hide" style="cursor: grab; user-select: none; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none;">
                 <div class="flex gap-3 pl-5 pr-5" style="width: max-content; padding-bottom: 2px;">
                     @foreach($contents as $content)
-                        <div class="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow cursor-pointer overflow-hidden flex-shrink-0 card-item"
+                        <div class="cursor-pointer flex-shrink-0 card-item"
                              style="width: calc(100vw - 60px); max-width: 320px;"
                              data-url="/content/{{ $content->id }}">
                             @if($content->thumbnail)
                                 <img src="{{ Storage::url($content->thumbnail) }}"
                                      alt="{{ $content->title }}"
-                                     class="w-full h-36 object-cover">
+                                     class="w-full h-36 object-cover rounded-lg">
                             @else
-                                <div class="w-full h-36 bg-gray-200 flex items-center justify-center">
+                                <div class="w-full h-36 bg-gray-200 flex items-center justify-center rounded-lg">
                                     <svg class="w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                               d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
@@ -86,7 +45,7 @@
                                 </div>
                             @endif
 
-                            <div class="p-3">
+                            <div class="mt-3">
                                 <div class="mb-2">
                                     <h3 class="text-sm font-semibold text-gray-900 line-clamp-2">
                                         {{ $content->title }}

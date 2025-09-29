@@ -1,3 +1,5 @@
+@import 'common.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -8,19 +10,19 @@
   }
 
   .menu-item {
-    @apply py-3 text-gray-600 text-sm font-medium whitespace-nowrap border-b-2 border-transparent transition-all hover:text-primary hover:border-primary;
+    @apply py-3 text-gray-600 text-sm font-medium whitespace-nowrap border-b-2 border-transparent transition-all hover:text-[#4056FF] hover:border-[#4056FF];
   }
 
   .menu-item.active {
-    @apply text-primary border-primary;
+    @apply text-[#4056FF] border-[#4056FF];
   }
 
   .nav-item {
-    @apply flex-1 flex flex-col items-center justify-center py-2 text-gray-400 transition-all hover:text-primary;
+    @apply flex-1 flex flex-col items-center justify-center py-2 text-gray-400 transition-all hover:text-[#4056FF];
   }
 
   .nav-item.active {
-    @apply text-primary;
+    @apply text-[#4056FF];
   }
 
   .action-icon {

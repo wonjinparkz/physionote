@@ -20,18 +20,21 @@
 <body class="font-sans bg-gray-light min-h-screen flex justify-center items-start p-0 m-0 antialiased">
     <div class="app-container">
         <header class="bg-white px-5 py-4 border-b border-border z-50 flex justify-between items-center">
-            <h1 class="text-2xl font-bold text-gray-900">PhysioNote</h1>
+            <a href="/" class="flex items-center">
+                <img src="{{ asset('storage/assets/physionote_logo.svg') }}" alt="PhysioNote" class="h-8 w-auto">
+            </a>
             @guest
             <div class="flex gap-2">
-                <a href="/register" class="px-3 py-1.5 bg-primary text-white rounded-md text-sm font-medium transition-colors hover:bg-primary-dark">회원가입</a>
-                <a href="/login" class="px-3 py-1.5 bg-transparent text-primary border border-primary rounded-md text-sm font-medium transition-colors hover:bg-blue-50">로그인</a>
+                <a href="/register" class="px-3 py-1.5 bg-[#4056FF] text-white rounded-md text-sm font-medium transition-colors hover:bg-[#3447E6]">회원가입</a>
+                <a href="/login" class="px-3 py-1.5 bg-transparent text-[#4056FF] border border-[#4056FF] rounded-md text-sm font-medium transition-colors hover:bg-blue-50">로그인</a>
             </div>
             @else
-            <div class="flex gap-2">
-                <a href="/logout" class="px-3 py-1.5 bg-transparent text-primary border border-primary rounded-md text-sm font-medium transition-colors hover:bg-blue-50"
+            <div class="flex gap-2 items-center">
+                <span class="text-sm text-gray-600">{{ Auth::user()->name }}님</span>
+                <a href="{{ route('logout') }}" class="px-3 py-1.5 bg-transparent text-[#4056FF] border border-[#4056FF] rounded-md text-sm font-medium transition-colors hover:bg-blue-50"
                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">로그아웃</a>
             </div>
-            <form id="logout-form" action="/logout" method="POST" class="hidden">
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
                 @csrf
             </form>
             @endguest
@@ -40,8 +43,7 @@
         <nav class="bg-white px-5 border-b border-border flex gap-5 overflow-x-auto scrollbar-hide">
             <a href="/" class="menu-item {{ request()->is('/') ? 'active' : '' }}">홈</a>
             <a href="/problems" class="menu-item {{ request()->is('problems*') ? 'active' : '' }}">문제</a>
-            <a href="/clinical" class="menu-item {{ request()->is('clinical*') ? 'active' : '' }}">임상정보</a>
-            <a href="#" onclick="alert('커뮤니티 기능은 준비중입니다.'); return false;" class="menu-item">커뮤니티</a>
+            <a href="/clinical" class="menu-item {{ request()->is('clinical*') ? 'active' : '' }}">콘텐츠</a>
             <a href="/mypage" class="menu-item {{ request()->is('mypage*') ? 'active' : '' }}">마이페이지</a>
         </nav>
 

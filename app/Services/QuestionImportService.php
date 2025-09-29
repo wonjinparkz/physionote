@@ -10,6 +10,16 @@ use Illuminate\Support\Str;
 
 class QuestionImportService
 {
+    protected $defaultCategoryId = null;
+    protected $defaultSubCategoryId = null;
+
+    public function setCategoryDefaults($categoryId = null, $subCategoryId = null)
+    {
+        $this->defaultCategoryId = $categoryId;
+        $this->defaultSubCategoryId = $subCategoryId;
+        return $this;
+    }
+
     public function importFromFile($filePath)
     {
         $extension = pathinfo($filePath, PATHINFO_EXTENSION);
@@ -67,6 +77,15 @@ class QuestionImportService
                         'explanation' => $this->cleanHtml($row['I'] ?? null),
                     ];
 
+                    // sub_category_id가 설정되어 있으면 해당 카테고리의 부모를 category_id로 설정
+                    if ($this->defaultSubCategoryId) {
+                        $subCategory = \App\Models\SubCategory::find($this->defaultSubCategoryId);
+                        if ($subCategory) {
+                            $questionData['category_id'] = $subCategory->category_id;
+                            $questionData['sub_category_id'] = $this->defaultSubCategoryId;
+                        }
+                    }
+
                     // Validate required fields
                     if (empty($questionData['no'])) {
                         throw new \Exception("문제 번호가 없습니다.");
@@ -75,16 +94,9 @@ class QuestionImportService
                         throw new \Exception("문제 내용이 없습니다.");
                     }
 
-                    // Check if question number already exists
-                    $existingQuestion = Question::where('no', $questionData['no'])->first();
-
-                    if ($existingQuestion) {
-                        // Update existing question
-                        $existingQuestion->update($questionData);
-                    } else {
-                        // Create new question
-                        Question::create($questionData);
-                    }
+                    // 번호가 고유하지 않아도 되므로 항상 새로운 문제 생성
+                    // 동일한 번호의 문제가 여러 개 존재할 수 있음
+                    Question::create($questionData);
 
                     $importResults['success']++;
                 } catch (\Exception $e) {

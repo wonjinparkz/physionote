@@ -21,6 +21,18 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'provider',
+        'provider_id',
+        'provider_token',
+        'provider_refresh_token',
+        'avatar',
+        'phone',
+        'birth_date',
+        'occupation',
+        'workplace',
+        'experience_years',
+        'bio',
+        'profile_image',
     ];
 
     /**
@@ -42,4 +54,23 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    /**
+     * Get user statistics.
+     */
+    public function getStatistics()
+    {
+        // Placeholder for statistics
+        // TODO: Implement actual statistics when quiz tracking is ready
+
+        return [
+            'total_attempts' => 0,
+            'total_questions' => 0,
+            'correct_answers' => 0,
+            'wrong_answers' => 0,
+            'skipped_answers' => 0,
+            'average_score' => 0,
+            'total_time_spent' => 0,
+        ];
+    }
 }

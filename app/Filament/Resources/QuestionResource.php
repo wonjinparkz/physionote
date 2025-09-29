@@ -5,6 +5,8 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\QuestionResource\Pages;
 use App\Filament\Resources\QuestionResource\RelationManagers;
 use App\Models\Question;
+use App\Models\Category;
+use App\Models\SubCategory;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -12,6 +14,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Get;
 
 class QuestionResource extends Resource
 {
@@ -19,11 +22,13 @@ class QuestionResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-academic-cap';
 
-    protected static ?string $modelLabel = '문제';
+    protected static ?string $modelLabel = '기출문제';
 
-    protected static ?string $pluralModelLabel = '문제 관리';
+    protected static ?string $pluralModelLabel = '기출문제 관리';
 
-    protected static ?string $navigationLabel = '문제 관리';
+    protected static ?string $navigationLabel = '기출문제 관리';
+
+    protected static ?string $navigationGroup = '문제 관리';
 
     public static function form(Form $form): Form
     {
@@ -32,8 +37,7 @@ class QuestionResource extends Resource
                 Forms\Components\TextInput::make('no')
                     ->label('문제 번호')
                     ->required()
-                    ->numeric()
-                    ->unique(ignoreRecord: true),
+                    ->numeric(),
 
                 Forms\Components\RichEditor::make('question')
                     ->label('문제')
@@ -97,6 +101,58 @@ class QuestionResource extends Resource
                     ->nullable()
                     ->placeholder('선택하세요'),
 
+                Forms\Components\Section::make('카테고리')
+                    ->schema([
+                        Forms\Components\Select::make('sub_category_id')
+                            ->label('카테고리')
+                            ->options(function () {
+                                $questionCategory = Category::where('name', '문제')
+                                    ->with('subCategories')
+                                    ->first();
+
+                                if (!$questionCategory) {
+                                    return [];
+                                }
+
+                                $options = [];
+                                foreach ($questionCategory->subCategories as $subCategory) {
+                                    $subSubCategories = SubCategory::where('category_id', $subCategory->id)->get();
+
+                                    if ($subSubCategories->isEmpty()) {
+                                        // 하위 카테고리가 없으면 직접 추가
+                                        $label = $subCategory->name;
+                                        if ($subCategory->slug) {
+                                            $label .= ' | ' . $subCategory->slug;
+                                        }
+                                        if ($subCategory->description) {
+                                            $label .= ' | ' . $subCategory->description;
+                                        }
+                                        $options[$subCategory->id] = $label;
+                                    } else {
+                                        // 하위 카테고리가 있으면 그룹으로 추가
+                                        $group = [];
+                                        foreach ($subSubCategories as $subSub) {
+                                            $label = $subSub->name;
+                                            if ($subSub->slug) {
+                                                $label .= ' | ' . $subSub->slug;
+                                            }
+                                            if ($subSub->description) {
+                                                $label .= ' | ' . $subSub->description;
+                                            }
+                                            $group[$subSub->id] = $label;
+                                        }
+                                        $options[$subCategory->name] = $group;
+                                    }
+                                }
+
+                                return $options;
+                            })
+                            ->searchable()
+                            ->nullable()
+                            ->helperText('문제 카테고리 아래의 카테고리를 선택하세요'),
+                    ])
+                    ->columns(1),
+
                 Forms\Components\RichEditor::make('explanation')
                     ->label('해설')
                     ->columnSpanFull()
@@ -143,7 +199,8 @@ class QuestionResource extends Resource
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('생성일')
                     ->dateTime('Y-m-d H:i')
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('answer_status')
@@ -158,6 +215,48 @@ class QuestionResource extends Resource
                             'without_answer' => $query->whereNull('answer'),
                             default => $query
                         };
+                    }),
+
+                Tables\Filters\SelectFilter::make('sub_category_id')
+                    ->label('카테고리')
+                    ->options(function () {
+                        $questionCategory = Category::where('name', '문제')
+                            ->with('subCategories')
+                            ->first();
+
+                        if (!$questionCategory) {
+                            return [];
+                        }
+
+                        $options = [];
+                        foreach ($questionCategory->subCategories as $subCategory) {
+                            $subSubCategories = SubCategory::where('category_id', $subCategory->id)->get();
+
+                            if ($subSubCategories->isEmpty()) {
+                                $label = $subCategory->name;
+                                if ($subCategory->slug) {
+                                    $label .= ' | ' . $subCategory->slug;
+                                }
+                                if ($subCategory->description) {
+                                    $label .= ' | ' . $subCategory->description;
+                                }
+                                $options[$subCategory->id] = $label;
+                            } else {
+                                foreach ($subSubCategories as $subSub) {
+                                    $parentLabel = $subCategory->name;
+                                    $label = $subSub->name;
+                                    if ($subSub->slug) {
+                                        $label .= ' | ' . $subSub->slug;
+                                    }
+                                    if ($subSub->description) {
+                                        $label .= ' | ' . $subSub->description;
+                                    }
+                                    $options[$subSub->id] = $parentLabel . ' > ' . $label;
+                                }
+                            }
+                        }
+
+                        return $options;
                     }),
             ])
             ->actions([

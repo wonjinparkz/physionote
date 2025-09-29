@@ -25,7 +25,10 @@
       "Read(//etc/nginx/sites-enabled/**)",
       "Read(//etc/apache2/sites-enabled/**)",
       "Read(//home/**)",
-      "Bash(ln:*)"
+      "Bash(ln:*)",
+      "Read(//etc/apache2/sites-available/**)",
+      "Bash(sudo cat:*)",
+      "Bash(cat:*)"
     ],
     "deny": [],
     "ask": []
